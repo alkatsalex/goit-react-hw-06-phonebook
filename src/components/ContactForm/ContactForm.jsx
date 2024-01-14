@@ -1,8 +1,10 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import css from './ContactForm.module.css';
 import { addContact } from 'store/ContactSlice/ContactSlice';
+import { selectContacts } from 'store/selectors';
 
 function ContactForm() {
+  const { contacts } = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
@@ -13,7 +15,15 @@ function ContactForm() {
       name,
       number,
     };
-    dispatch(addContact(contact));
+    const isDublicated = contacts.find(
+      e => e.name.toLowerCase() === contact.name.toLowerCase()
+    );
+    if (isDublicated) {
+      alert('This contact is already added');
+      return;
+    } else {
+      dispatch(addContact(contact));
+    }
 
     e.target.number.value = '';
     e.target.name.value = '';

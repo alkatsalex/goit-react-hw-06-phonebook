@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import css from './Filter.module.css';
 import { chengeFilter } from 'store/filterSlice/filterSlice';
+import { selectFilter } from 'store/selectors';
 
 export default function Filter() {
-  const { filter } = useSelector(state => state.filter);
+  const { filter } = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const hendleChange = e => {
